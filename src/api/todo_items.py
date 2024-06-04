@@ -5,20 +5,20 @@ router = APIRouter()
 
 
 @router.get("/lists/{list_id}/todos")
-def get_todos():
+async def get_todos():
     return
 
 
 @router.post("/lists/{list_id}/todos")
-def create_todo():
+async def create_todo():
     return
 
 
 @router.patch("/lists/{list_id}/todos/{todo_id}")
-def update_todo():
+async def update_todo():
     return
 
 
 @router.delete("/lists/{list_id}/todos/{todo_id}")
-def gelete_todo():
+async def gelete_todo():
     return
