@@ -1,9 +1,27 @@
+from contextlib import asynccontextmanager
+
+from databases import Database
 from fastapi import FastAPI
 
+import controller.todo as todo_module
 from api import include_routers
+from core.settings import get_settings
 
 
-app = FastAPI(title="Fast API - todo list")
+config = get_settings()
+
+db = Database(config.db.dsn)
+
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    await db.connect()
+    todo_module.todo_controller = todo_module.TodoController(db)
+    yield
+    await db.disconnect()
+
+
+app = FastAPI(title="Fast API - todo list", lifespan=lifespan)
 include_routers(app)
 
 
